@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { selectedAdjectives } from './store';
+	import { selectedAdjectives } from '../stores';
 
 	let displayAdjectives: string[];
 
