@@ -13,21 +13,18 @@ const dynamoClient = new DynamoDBClient({
     }
 });
 
-export const POST = (async ({ request }) => {
-    const { users } = await request.json();
-
-    const roomId = uuidv4()
-
-    const Item = {
-        id: { S: roomId },
-        participants: { S: JSON.stringify(users) }
-    };
-    await dynamoClient.send(
-        new PutItemCommand({
+export const GET = (async ({ params }) => {
+    const { Item } = await dynamoClient.send(
+        new GetItemCommand({
             TableName: 'room',
-            Item,
+            Key: {
+                id: {S: params.id}
+            }
         })
     );
 
-    return json({ id: roomId });
+    return json({
+        id: params.id,
+        participants: JSON.parse(Item?.participants.S ?? '[]')
+    });
 }) satisfies RequestHandler;

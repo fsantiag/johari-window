@@ -1,16 +1,15 @@
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
- 
-export const load = (({ params }) => {
+
+
+export const load = (async ({ params, fetch }) => {
+  const response = await fetch(`/api/room/${params.id}`)
+  const { participants } = await response.json()
   return {
-    id: params.id
+    id: params.id,
+    participants: participants
   }
-  // if (params.id === 'hello-world') {
-  //   return {
-  //     title: 'Hello world!',
-  //     content: 'Welcome to our blog. Lorem ipsum dolor sit amet...'
-  //   };
-  // }
- 
+
+
   // throw error(404, 'Not found');
 }) satisfies PageLoad;
