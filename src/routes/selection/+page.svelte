@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { selectedAdjectives } from '../stores';
+	import { selectedAdjectivesStore } from '../stores';
 
 	let displayAdjectives: string[];
 
-	selectedAdjectives.subscribe((value) => {
+	selectedAdjectivesStore.subscribe((value) => {
 		displayAdjectives = value;
 	});
 
@@ -21,7 +21,7 @@
 
 	const addAdjective = (element: HTMLElement) => {
 		element.classList.add('bg-gray-400');
-		selectedAdjectives.update((store) => {
+		selectedAdjectivesStore.update((store) => {
 			const adjective = element.textContent ?? 'unknown';
 			if (!store.includes(adjective)) {
 				store.push(adjective);

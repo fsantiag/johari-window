@@ -34,6 +34,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@aws-sdk/client-dynamodb": "^3.309.0",
 		"@fontsource/roboto": "^4.5.8",
 		"uuid": "^9.0.0"
 	}
