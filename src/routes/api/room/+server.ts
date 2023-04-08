@@ -16,8 +16,10 @@ const dynamoClient = new DynamoDBClient({
 export const POST = (async ({ request }) => {
     const { users } = await request.json();
 
+    const roomId = uuidv4()
+
     const Item = {
-        id: { S: uuidv4() },
+        id: { S: roomId },
         participants: { S: JSON.stringify(users) }
     };
     await dynamoClient.send(
@@ -27,5 +29,5 @@ export const POST = (async ({ request }) => {
         })
     );
 
-    return json({ status: "ok" });
+    return json({ id: roomId });
 }) satisfies RequestHandler;

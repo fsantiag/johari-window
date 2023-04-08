@@ -31,11 +31,15 @@
 	};
 
 	const createRoom = async () => {
-		const response = await fetch('/api/room', { method: 'POST', body: JSON.stringify({ users: participants }) });
+		const response = await fetch('/api/room', {
+			method: 'POST',
+			body: JSON.stringify({ users: participants })
+		});
+		const { id } = await response.json();
 		if (response.ok) {
-			return goto('/room');
+			return goto(`/room/${id}`);
 		}
-		alert('something wrong')
+		alert('something wrong');
 	};
 
 	const remove = (participant: Participant) => {
