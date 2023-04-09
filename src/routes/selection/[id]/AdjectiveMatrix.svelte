@@ -1,8 +1,9 @@
 <script lang="ts">
+	import type { Participant } from '../../start/types';
 	import { assignedAdjectivesStore } from '../../stores';
 	import { ADJECTIVES } from './adjectives';
 
-	export let userId: string;
+	export let participant: Participant;
 
 	let selectedAdjectives: string[] = [];
 
@@ -11,7 +12,7 @@
 		selectedAdjectives.push(adjective);
 		element.classList.add('bg-gray-400');
 		assignedAdjectivesStore.update((store) => {
-			store[userId] = selectedAdjectives;
+			store[participant.id] = selectedAdjectives;
 			return store;
 		});
 		console.log($assignedAdjectivesStore);
@@ -30,7 +31,7 @@
 	};
 </script>
 
-<p>Your selected adjectives</p>
+<p>Selected adjectives to {participant.name}</p>
 <p>{selectedAdjectives}</p>
 <br />
 <div class="grid grid-cols-2 md:grid-cols-6 gap-4">

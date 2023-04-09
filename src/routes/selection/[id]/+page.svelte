@@ -1,17 +1,24 @@
 <script lang="ts">
+	import type { Participant } from '../../start/types';
 	import { participantsStore } from '../../stores';
 	import type { PageData } from './$types';
 	import AdjectiveMatrix from './AdjectiveMatrix.svelte';
 
 	export let data: PageData;
 
-	let currentParticipant = data.id;
-	let toBeEvaluated = $participantsStore.filter((participant) => participant.id != data.id);
+	let currentParticipant: Participant | undefined = $participantsStore.find(
+		(participant) => participant.id == data.id
+	);
+	let remainingParticipants = $participantsStore.filter((participant) => participant.id != data.id);
 
 	const nextParticipant = () => {
-		if (toBeEvaluated.length > 0) {
-			currentParticipant = toBeEvaluated[0].id;
-			toBeEvaluated = toBeEvaluated.filter((participant) => participant.id != currentParticipant);
+		if (remainingParticipants.length > 0) {
+			currentParticipant = remainingParticipants[0];
+			remainingParticipants = remainingParticipants.filter(
+				(participant) => participant.id != currentParticipant?.id
+			);
+		} else {
+			currentParticipant = undefined
 		}
 	};
 </script>
@@ -26,7 +33,9 @@
 	</ul>
 </div>
 
-{#key toBeEvaluated}
-	<AdjectiveMatrix userId={currentParticipant} />
+{#key remainingParticipants}
+	{#if currentParticipant}
+		<AdjectiveMatrix participant={currentParticipant} />
+	{/if}
 {/key}
 <button on:click={nextParticipant}>Next</button>
