@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import type { Participant } from '../../start/types';
 	import { participantsStore } from '../../stores';
 	import type { PageData } from './$types';
@@ -18,7 +19,7 @@
 				(participant) => participant.id != currentParticipant?.id
 			);
 		} else {
-			currentParticipant = undefined
+			goto(`/result/${data.id}`)
 		}
 	};
 </script>
