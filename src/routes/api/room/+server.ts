@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types';
 //@ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 import { env } from '$env/dynamic/private';
-import { DynamoDBClient, GetItemCommand, PutItemCommand } from '@aws-sdk/client-dynamodb';
+import { DynamoDBClient, PutItemCommand } from '@aws-sdk/client-dynamodb';
 
 
 const dynamoClient = new DynamoDBClient({

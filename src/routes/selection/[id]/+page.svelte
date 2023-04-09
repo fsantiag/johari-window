@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { selectedAdjectivesStore } from '../stores';
+	import { selectedAdjectivesStore } from '../../stores';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	let displayAdjectives: string[];
 
@@ -88,10 +91,9 @@
 		'witty'
 	];
 </script>
-
+<p>This is your id: <b>{data.id}</b></p>
 <p>Your selected adjectives</p>
 <p class="mb-3 text-gray-500 dark:text-gray-400">{displayAdjectives}</p>
-
 <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
 	{#each adjectives as adjective, i}
 		<div class="hover:bg-slate-500" on:click={handleClick} on:keydown={handleSpace}>

@@ -7,5 +7,5 @@
 <p>Your room id is {data.id}</p>
 
 {#each data.participants as participant}
-	<div>{participant.name}</div>
+	<div><a href="/selection/{participant.id}">{participant.name}</a></div>
 {/each}
