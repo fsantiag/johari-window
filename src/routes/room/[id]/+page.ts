@@ -8,7 +8,8 @@ export const load = (async ({ params, fetch }) => {
   const { participants }: { participants: Participant[] } = await response.json()
   return {
     id: params.id,
-    participants: participants
+    participants: participants,
+    roomId: params.id
   }
 
 }) satisfies PageLoad;

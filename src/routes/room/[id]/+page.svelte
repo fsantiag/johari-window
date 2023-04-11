@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { participantsStore } from '../../stores';
+	import { participantsStore, roomStore } from '../../stores';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
 	participantsStore.update(() => [...data.participants]);
+	roomStore.update(() => data.roomId);
 </script>
 
 <p>Your room id is {data.id}</p>
