@@ -15,7 +15,6 @@
 			store[participant.id] = selectedAdjectives;
 			return store;
 		});
-		console.log($assignedAdjectivesStore);
 	};
 
 	const handleClick = (event: MouseEvent) => {

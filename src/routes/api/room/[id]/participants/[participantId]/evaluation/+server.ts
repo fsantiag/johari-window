@@ -56,6 +56,6 @@ export const GET = (async ({ params }) => {
     console.log(Items)
 
     return json({
-        id: params.id
+        result: Items
     });
 }) satisfies RequestHandler;
