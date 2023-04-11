@@ -27,7 +27,7 @@
 		} else {
 			const response = await fetch(`/api/room/${$roomStore}/participants/${data.id}/evaluation`, {
 				method: 'POST',
-				body: JSON.stringify({ evaluation: $assignedAdjectivesStore, participant: initialParticipant })
+				body: JSON.stringify({ evaluation: $assignedAdjectivesStore, participant: initialParticipant})
 			});
 			if (!response.ok) {
 				return alert('something went wrong')

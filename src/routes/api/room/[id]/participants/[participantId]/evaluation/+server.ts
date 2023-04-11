@@ -3,8 +3,8 @@ import type { RequestHandler } from './$types';
 //@ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 import { env } from '$env/dynamic/private';
-import { DynamoDBClient, GetItemCommand, PutItemCommand, QueryCommand, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
-
+import { DynamoDBClient, PutItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
+import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
 
 const dynamoClient = new DynamoDBClient({
     region: "eu-central-1", credentials: {
@@ -19,12 +19,13 @@ export const POST = (async ({ request, params }) => {
     const { evaluation, participant } = await request.json();
 
     const evaluationId = uuidv4()
+    console.log(participant.id)
 
     const Item = {
         id: { S: evaluationId },
         roomId: { S: params.id },
-        participant: { S: JSON.stringify(participant) },
-        evaluation: { S: JSON.stringify(evaluation) }
+        participant: { M: marshall(participant)},
+        evaluation: { M: marshall(evaluation) }
     };
     await dynamoClient.send(
         new PutItemCommand({
@@ -53,9 +54,16 @@ export const GET = (async ({ params }) => {
         })
     );
 
-    console.log(Items)
+    
+
+    const evaluations = Items?.map(item => {
+        return unmarshall(item)
+    })
+    console.log(evaluations);
+    
+    // console.log(unmarshall(Items))
 
     return json({
-        result: Items
+        evaluations
     });
 }) satisfies RequestHandler;
