@@ -6,3 +6,10 @@ export type Participant = {
 export type AssignedAdjectivesMap = {
     [id: string]: string[]
 }
+
+export type Evaluation = {
+    id: string,
+    roomId: string,
+    participant: Participant,
+    evaluation: AssignedAdjectivesMap
+}

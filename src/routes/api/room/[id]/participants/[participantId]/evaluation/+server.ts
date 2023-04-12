@@ -59,9 +59,6 @@ export const GET = (async ({ params }) => {
     const evaluations = Items?.map(item => {
         return unmarshall(item)
     })
-    console.log(evaluations);
-    
-    // console.log(unmarshall(Items))
 
     return json({
         evaluations
