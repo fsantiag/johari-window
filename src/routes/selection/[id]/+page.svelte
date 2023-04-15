@@ -37,19 +37,20 @@
 	};
 </script>
 
-<p>This is your id: <b>{data.id}</b></p>
-<div>
-	Participants:
-	<ul>
-		{#each $participantsStore as p}
-			<li>{p.name}</li>
-		{/each}
-	</ul>
-</div>
-
 {#key remainingParticipants}
 	{#if currentParticipant}
 		<AdjectiveMatrix participant={currentParticipant} />
 	{/if}
 {/key}
-<button on:click={() => nextParticipant()}>Next</button>
+<div class="col-span-full">
+	<div class="mt-2 flex items-center gap-x-3">
+		<button
+			type="button"
+			class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+			on:click={() => nextParticipant()}
+		>
+		Next
+		</button>
+	</div>
+</div>
+
