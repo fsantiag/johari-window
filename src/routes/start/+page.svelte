@@ -50,8 +50,8 @@
 </script>
 
 <div class="space-y-10">
-	<div class="border-b pb-8">
-		<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
+	<div class="border p-8 rounded-lg">
+		<div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
 			<div class="sm:col-span-4">
 				<h2 class="text-base font-semibold leading-7 text-gray-900">Johari Window Setup</h2>
 				<div class="mt-2">
