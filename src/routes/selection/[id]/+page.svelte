@@ -15,7 +15,6 @@
 		(participant) => participant.id == data.id
 	);
 
-	
 	let remainingParticipants = $participantsStore.filter((participant) => participant.id != data.id);
 
 	const nextParticipant = async () => {
@@ -27,30 +26,36 @@
 		} else {
 			const response = await fetch(`/api/room/${$roomStore}/participants/${data.id}/evaluation`, {
 				method: 'POST',
-				body: JSON.stringify({ evaluation: $assignedAdjectivesStore, participant: initialParticipant})
+				body: JSON.stringify({
+					evaluation: $assignedAdjectivesStore,
+					participant: initialParticipant
+				})
 			});
 			if (!response.ok) {
-				return alert('something went wrong')
+				return alert('something went wrong');
 			}
 			goto(`/room/${$roomStore}/participant/${data.id}/evaluation`);
 		}
 	};
 </script>
 
-{#key remainingParticipants}
-	{#if currentParticipant}
-		<AdjectiveMatrix participant={currentParticipant} />
-	{/if}
-{/key}
-<div class="col-span-full">
-	<div class="mt-2 flex items-center gap-x-3">
-		<button
-			type="button"
-			class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-			on:click={() => nextParticipant()}
-		>
-		Next
-		</button>
+<div class="border space-y-10 rounded-lg">
+	<div class="p-8">
+		{#key remainingParticipants}
+			{#if currentParticipant}
+				<AdjectiveMatrix participant={currentParticipant} />
+			{/if}
+		{/key}
+		<div class="pt-4 col-span-full">
+			<div class="mt-2 flex items-center gap-x-3">
+				<button
+					type="button"
+					class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+					on:click={() => nextParticipant()}
+				>
+					Next
+				</button>
+			</div>
+		</div>
 	</div>
 </div>
-
