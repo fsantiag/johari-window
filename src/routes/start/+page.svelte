@@ -6,24 +6,19 @@
 	import { participantsStore } from '../stores';
 	import { goto } from '$app/navigation';
 
-	let participants: Participant[];
+	let participants: Participant[] = [];
 	let isDisabled: boolean = false;
 
-	participantsStore.subscribe((value) => {
-		participants = value;
-	});
+	let participantName = '';
 
-	const add = (target: EventTarget | null) => {
+	const addParticipant = () => {
 		if (participants.length < 10) {
-			const input = target as HTMLInputElement;
-			if (target) {
-				const newParticipant: Participant = {
-					id: uuidv4(),
-					name: input.value
-				};
-				participantsStore.update((store) => [...store, newParticipant]);
-			}
-			input.value = '';
+			const newParticipant: Participant = {
+				id: uuidv4(),
+				name: participantName
+			};
+			participants = [...participants, newParticipant];
+			participantName = '';
 			isDisabled = participants.length < 2;
 		} else {
 			alert('The session is limited to 10 people at the same time.');
@@ -61,7 +56,8 @@
 					<input
 						class="text-sm block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 						placeholder="Enter participant name"
-						on:keydown={(e) => e.key === 'Enter' && add(e.target)}
+						bind:value={participantName}
+						on:keydown={(e) => e.key === 'Enter' && addParticipant()}
 					/>
 				</div>
 			</div>
