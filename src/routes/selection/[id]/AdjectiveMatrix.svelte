@@ -1,11 +1,10 @@
 <script lang="ts">
 	import type { Participant } from '../../start/types';
-	import { assignedAdjectivesStore } from '../../stores';
 	import { ADJECTIVES } from './adjectives';
 
-	export let participant: Participant;
+	export let participant: Participant | undefined;
 
-	let selectedAdjectives: string[] = [];
+	export let selectedAdjectives: string[] = [];
 
 	const selectAdjective = (element: HTMLElement) => {
 		const adjective = element.textContent ?? 'unknown';
@@ -16,11 +15,6 @@
 			selectedAdjectives.push(adjective);
 			element.classList.add('bg-gray-400');
 		}
-
-		assignedAdjectivesStore.update((store) => {
-			store[participant.id] = selectedAdjectives;
-			return store;
-		});
 	};
 
 	const handleClick = (event: MouseEvent) => {
@@ -43,7 +37,7 @@
 				<div class="mt-2">
 					<p class="mt-1 text-sm leading-6 text-gray-600 py-1">
 						Select all adjetives that you believe it could be used to decribe <b
-							>{participant.name}</b
+							>{participant?.name}</b
 						>:
 					</p>
 					<div class="grid grid-cols-2 md:grid-cols-6 gap-4">

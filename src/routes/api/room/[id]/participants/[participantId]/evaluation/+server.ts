@@ -19,7 +19,6 @@ export const POST = (async ({ request, params }) => {
     const { evaluation, participant } = await request.json();
 
     const evaluationId = uuidv4()
-    console.log(participant.id)
 
     const Item = {
         id: { S: evaluationId },

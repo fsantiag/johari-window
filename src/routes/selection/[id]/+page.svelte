@@ -1,50 +1,50 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import type { Participant } from '../../start/types';
-	import { assignedAdjectivesStore, participantsStore, roomStore } from '../../stores';
+	import type { AssignedAdjectivesMap } from '../../start/types';
 	import type { PageData } from './$types';
 	import AdjectiveMatrix from './AdjectiveMatrix.svelte';
 
 	export let data: PageData;
 
-	let initialParticipant: Participant | undefined = $participantsStore.find(
-		(participant) => participant.id == data.id
+	let initialParticipant = data.participants.find(
+		(participant) => participant.id == data.participantId
 	);
 
-	let currentParticipant: Participant | undefined = $participantsStore.find(
-		(participant) => participant.id == data.id
-	);
+	let remainingParticipants = data.participants.filter(p => p.id != initialParticipant?.id);
+	let evaluatedParticipant = initialParticipant;
 
-	let remainingParticipants = $participantsStore.filter((participant) => participant.id != data.id);
+	let selectedAdjectives: string[] = [];
+	let participantAdjectives: AssignedAdjectivesMap = {}
 
 	const nextParticipant = async () => {
+		participantAdjectives[evaluatedParticipant!!.id] = selectedAdjectives
 		if (remainingParticipants.length > 0) {
-			currentParticipant = remainingParticipants[0];
-			remainingParticipants = remainingParticipants.filter(
-				(participant) => participant.id != currentParticipant?.id
-			);
+			evaluatedParticipant = remainingParticipants.pop();
+			selectedAdjectives = [];
 		} else {
-			const response = await fetch(`/api/room/${$roomStore}/participants/${data.id}/evaluation`, {
-				method: 'POST',
-				body: JSON.stringify({
-					evaluation: $assignedAdjectivesStore,
-					participant: initialParticipant
-				})
-			});
+			console.log(participantAdjectives);
+			const response = await fetch(
+				`/api/room/${data.roomId}/participants/${data.participantId}/evaluation`,
+				{
+					method: 'POST',
+					body: JSON.stringify({
+						evaluation: participantAdjectives,
+						participant: initialParticipant
+					})
+				}
+			);
 			if (!response.ok) {
 				return alert('something went wrong');
 			}
-			goto(`/room/${$roomStore}/participant/${data.id}/evaluation`);
+			goto(`/room/${data.roomId}/participant/${data.participantId}/evaluation`);
 		}
 	};
 </script>
 
 <div class="border space-y-10 rounded-lg">
 	<div class="p-8">
-		{#key remainingParticipants}
-			{#if currentParticipant}
-				<AdjectiveMatrix participant={currentParticipant} />
-			{/if}
+		{#key evaluatedParticipant}
+			<AdjectiveMatrix participant={evaluatedParticipant} bind:selectedAdjectives />
 		{/key}
 		<div class="pt-4 col-span-full">
 			<div class="mt-2 flex items-center gap-x-3">
