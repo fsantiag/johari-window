@@ -3,7 +3,6 @@
 	import type { Participant } from './types';
 	//@ts-ignore
 	import { v4 as uuidv4 } from 'uuid';
-	import { participantsStore } from '../stores';
 	import { goto } from '$app/navigation';
 
 	let participants: Participant[] = [];
@@ -39,7 +38,7 @@
 
 	const remove = (participant: Participant) => {
 		const { id } = participant;
-		participantsStore.update((store) => store.filter((p) => p.id !== id));
+		participants = participants.filter((p) => p.id !== id);
 		isDisabled = participants.length < 2;
 	};
 </script>
