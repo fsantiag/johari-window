@@ -1,14 +1,10 @@
 <script lang="ts">
-	import { participantsStore, roomStore } from '../../stores';
 	import type { PageData } from './$types';
 	import { copy } from 'svelte-copy';
 	import { page } from '$app/stores';
 
 	export let data: PageData;
 	const roomUrl: string = $page.url.toString();
-
-	participantsStore.update(() => [...data.participants]);
-	roomStore.update(() => data.roomId);
 </script>
 
 <div class="border p-8 rounded-lg">
