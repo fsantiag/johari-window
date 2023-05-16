@@ -2,10 +2,11 @@ import type { PageLoad } from './$types';
 
 export const load = (async ({ params, fetch }) => {
   const response = await fetch(`/api/room/${params.id}/participants/${params.participantId}/evaluation`)
-  const { evaluations } = await response.json()
+  const { evaluations, status } = await response.json()
   return {
     id: params.id,
     participantId: params.participantId,
-    evaluations
+    evaluations, 
+    status
   }
 }) satisfies PageLoad;

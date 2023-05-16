@@ -36,7 +36,7 @@
 			if (!response.ok) {
 				return alert('something went wrong');
 			}
-			goto(`/room/${data.roomId}/participant/${data.participantId}/evaluation`);
+			goto(`/room/${data.roomId}/participants/${data.participantId}/evaluation`);
 		}
 	};
 </script>
