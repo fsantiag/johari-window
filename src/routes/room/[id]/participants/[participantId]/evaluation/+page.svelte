@@ -12,7 +12,7 @@
 	let { recognizedByOthersAndMe, recognizedByMeOnly, recognizedByOthersOnly } =
 		useAdjectiveEvaluation(myself, data.evaluations);
 
-	let isFinished = data.status == 'completed' ? true: false;
+	let isFinished = data.status == 'completed' ? true : false;
 
 	onMount(() => {
 		if (!isFinished) {
@@ -28,7 +28,7 @@
 				recognizedByOthersAndMe = adjectives.recognizedByOthersAndMe;
 				recognizedByMeOnly = adjectives.recognizedByMeOnly;
 				recognizedByOthersOnly = adjectives.recognizedByOthersOnly;
-	
+
 				if (status == 'completed') {
 					clearInterval(update);
 					isFinished = true;
@@ -41,9 +41,6 @@
 <div class="bg-white py-24 sm:py-32">
 	<div class="mx-auto max-w-7xl px-6 lg:px-8">
 		<dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-			{#if isFinished}
-				<div>The session is finished!</div>
-			{/if}
 			<div class="mx-auto flex max-w-xs flex-col gap-y-4">
 				<dt class="text-base leading-7 text-gray-600">{recognizedByOthersAndMe?.join(', ')}</dt>
 				<dd
@@ -66,6 +63,35 @@
 					Blind Spot
 				</dd>
 			</div>
+			<div class="mx-auto flex max-w-xs flex-col gap-y-4">
+				<dt class="text-base leading-7 text-gray-600">
+					{#if isFinished}
+						<div class="font-bold">The session is finished!</div>
+					{:else}
+						<div class="loader" />
+					{/if}
+				</dt>
+			</div>
 		</dl>
 	</div>
 </div>
+
+<style>
+	.loader {
+		border: 16px solid #f3f3f3; /* Light grey */
+		border-top: 16px solid #3498db; /* Blue */
+		border-radius: 50%;
+		width: 64px;
+		height: 64px;
+		animation: spin 2s linear infinite;
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+</style>
