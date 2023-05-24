@@ -9,6 +9,7 @@
 	export let data: PageData;
 
 	const myself = data.participantId;
+	const myName = data.evaluations.find(data => data.participant.id == myself).participant.name
 
 	let {
 		recognizedByOthersAndMe,
@@ -45,6 +46,9 @@
 </script>
 
 <div class="bg-white py-24 sm:py-32">
+	<div class="flex justify-center items-center text-2xl mb-14 tracking-tight text-gray-900">
+		{myName} this is your result:
+	</div>
 	<div class="mx-auto max-w-7xl px-6 lg:px-8">
 		<dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
 			<div class="mx-auto flex max-w-xs flex-col gap-y-4">
