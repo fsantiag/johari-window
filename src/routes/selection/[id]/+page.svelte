@@ -10,17 +10,21 @@
 		(participant) => participant.id == data.participantId
 	);
 
-	let remainingParticipants = data.participants.filter(p => p.id != initialParticipant?.id);
+	let remainingParticipants = data.participants.filter((p) => p.id != initialParticipant?.id);
 	let evaluatedParticipant = initialParticipant;
 
 	let selectedAdjectives: string[] = [];
-	let participantAdjectives: AssignedAdjectivesMap = {}
+	let participantAdjectives: AssignedAdjectivesMap = {};
 
 	const nextParticipant = async () => {
-		participantAdjectives[evaluatedParticipant!!.id] = selectedAdjectives
+		participantAdjectives[evaluatedParticipant!!.id] = selectedAdjectives;
 		if (remainingParticipants.length > 0) {
 			evaluatedParticipant = remainingParticipants.pop();
 			selectedAdjectives = [];
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
 		} else {
 			console.log(participantAdjectives);
 			const response = await fetch(
