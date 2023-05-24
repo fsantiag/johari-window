@@ -33,6 +33,7 @@
 				recognizedByOthersAndMe = adjectives.recognizedByOthersAndMe;
 				recognizedByMeOnly = adjectives.recognizedByMeOnly;
 				recognizedByOthersOnly = adjectives.recognizedByOthersOnly;
+				evaluationsByParticipants = adjectives.evaluationsByParticipants;
 
 				if (status == 'completed') {
 					clearInterval(update);
@@ -94,7 +95,9 @@
 				</p>
 			</div>
 		{:else}
+		<div class="flex justify-center items-center mt-24">
 			<div class="loader" />
+		</div>
 		{/if}
 	</div>
 </div>
