@@ -63,16 +63,16 @@
 					Blind Spot
 				</dd>
 			</div>
-			<div class="mx-auto flex max-w-xs flex-col gap-y-4">
-				<dt class="text-base leading-7 text-gray-600">
-					{#if isFinished}
-						<div class="font-bold">The session is finished!</div>
-					{:else}
-						<div class="loader" />
-					{/if}
-				</dt>
-			</div>
 		</dl>
+		<div class="flex justify-center items-center mt-24">
+			<p class="text-center">
+				{#if isFinished}
+					<div class="font-bold">The session is finished!</div>
+				{:else}
+					<div class="loader" />
+				{/if}
+			</p>
+		</div>
 	</div>
 </div>
 
