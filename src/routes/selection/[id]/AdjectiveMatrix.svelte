@@ -4,6 +4,10 @@
 
 	export let participant: Participant | undefined;
 
+	export let maxAdjectives: number
+
+	let selected = 0
+
 	export let selectedAdjectives: string[] = [];
 
 	const selectAdjective = (element: HTMLElement) => {
@@ -11,10 +15,17 @@
 		if (selectedAdjectives.includes(adjective)) {
 			selectedAdjectives = selectedAdjectives.filter( item => item !== adjective)
 			element.classList.remove('bg-gray-400');
+			selected -= 1
 		} else {
-			selectedAdjectives.push(adjective);
-			element.classList.add('bg-gray-400');
+			if (selected < maxAdjectives) {
+				selectedAdjectives.push(adjective);
+				element.classList.add('bg-gray-400');
+				selected += 1
+			} else {
+				alert('Maximum number of adjectives, move to next participant or remove adjectives!')
+			}
 		}
+		console.log(selected)
 	};
 
 	const handleClick = (event: MouseEvent) => {

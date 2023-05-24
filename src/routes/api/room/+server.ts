@@ -14,13 +14,14 @@ const dynamoClient = new DynamoDBClient({
 });
 
 export const POST = (async ({ request }) => {
-    const { users } = await request.json();
+    const { users, maxAdjectives } = await request.json();
 
     const roomId = uuidv4()
 
     const Item = {
         id: { S: roomId },
-        participants: { S: JSON.stringify(users) }
+        participants: { S: JSON.stringify(users) },
+        maxAdjectives: { S: maxAdjectives }
     };
     await dynamoClient.send(
         new PutItemCommand({

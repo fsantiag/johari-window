@@ -26,7 +26,6 @@
 				behavior: 'smooth'
 			});
 		} else {
-			console.log(participantAdjectives);
 			const response = await fetch(
 				`/api/room/${data.roomId}/participants/${data.participantId}/evaluation`,
 				{
@@ -48,7 +47,7 @@
 <div class="border space-y-10 rounded-lg">
 	<div class="p-8">
 		{#key evaluatedParticipant}
-			<AdjectiveMatrix participant={evaluatedParticipant} bind:selectedAdjectives />
+			<AdjectiveMatrix participant={evaluatedParticipant} bind:selectedAdjectives maxAdjectives={data.maxAdjectives}/>
 		{/key}
 		<div class="pt-4 col-span-full">
 			<div class="mt-2 flex items-center gap-x-3">

@@ -25,6 +25,7 @@ export const GET = (async ({ params }) => {
 
     return json({
         id: params.id,
-        participants: JSON.parse(Item?.participants.S ?? '[]')
+        participants: JSON.parse(Item?.participants.S ?? '[]'),
+        maxAdjectives: Item?.maxAdjectives.S ?? 1
     });
 }) satisfies RequestHandler;

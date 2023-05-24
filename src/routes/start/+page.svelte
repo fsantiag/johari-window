@@ -8,6 +8,9 @@
 	let participants: Participant[] = [];
 	let isDisabled: boolean = false;
 
+	let maxNumberOfAdjectives = '5';
+	let options = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+
 	let participantName = '';
 
 	const addParticipant = () => {
@@ -27,7 +30,7 @@
 	const createRoom = async () => {
 		const response = await fetch('/api/room', {
 			method: 'POST',
-			body: JSON.stringify({ users: participants })
+			body: JSON.stringify({ users: participants, maxAdjectives: maxNumberOfAdjectives })
 		});
 		const { id } = await response.json();
 		if (response.ok) {
@@ -73,6 +76,19 @@
 					{:else}
 						<p class="mt-1 text-sm leading-6 text-gray-600">List is empty!</p>
 					{/if}
+				</div>
+			</div>
+			<div class="col-span-full">
+				<label for="participant" class="block text-sm font-medium leading-6 text-gray-900">
+					Max number of adjectives:
+				</label>
+				<div class="mt-2">
+					<select
+						bind:value={maxNumberOfAdjectives}
+						class="block text-sm font-medium leading-6 text-gray-900"
+					>
+						{#each options as value}<option {value}>{value}</option>{/each}
+					</select>
 				</div>
 			</div>
 			<div class="col-span-full">
