@@ -4,13 +4,18 @@
 	import type { PageData } from './$types';
 	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
+	// Initialization for ES Users
 
 	export let data: PageData;
 
 	const myself = data.participantId;
 
-	let { recognizedByOthersAndMe, recognizedByMeOnly, recognizedByOthersOnly } =
-		useAdjectiveEvaluation(myself, data.evaluations);
+	let {
+		recognizedByOthersAndMe,
+		recognizedByMeOnly,
+		recognizedByOthersOnly,
+		evaluationsByParticipants
+	} = useAdjectiveEvaluation(myself, data.evaluations);
 
 	let isFinished = data.status == 'completed' ? true : false;
 
@@ -64,15 +69,33 @@
 				</dd>
 			</div>
 		</dl>
-		<div class="flex justify-center items-center mt-24">
-			<p class="text-center">
-				{#if isFinished}
-					<div class="font-bold">The session is finished!</div>
-				{:else}
-					<div class="loader" />
-				{/if}
-			</p>
-		</div>
+		{#if isFinished}
+			<div class="relative mt-14 rounded-md shadow-sm">
+				<div class="text-xl font-bold tracking-tight text-gray-900">Adjectives by Participants</div>
+				<div class="mt-6 border-t border-gray-100">
+					<dl class="divide-y divide-gray-100">
+						{#each evaluationsByParticipants as evaluationByParticipant}
+							<div />
+							<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+								<dt class="text-sm font-medium leading-6 text-gray-900">
+									{evaluationByParticipant.name}
+								</dt>
+								<dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+									{evaluationByParticipant.myAdjectives.join(',')}
+								</dd>
+							</div>
+						{/each}
+					</dl>
+				</div>
+			</div>
+			<div class="flex justify-center items-center mt-24">
+				<p class="text-center">
+					<b>The session is finished!</b>
+				</p>
+			</div>
+		{:else}
+			<div class="loader" />
+		{/if}
 	</div>
 </div>
 

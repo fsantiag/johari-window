@@ -9,7 +9,14 @@ export const useAdjectiveEvaluation = (myself: string, evaluations: Evaluation[]
     const othersEvaluation = evaluations.filter((result) => {
         return result.participant.id != myself
     })
-    
+
+    const evaluationsByParticipants = othersEvaluation.map(result => {
+        return {
+            name: result.participant.name,
+            myAdjectives: result.evaluation[myself]
+        }
+     })
+
 	const othersAdjectives = othersEvaluation.map(result => {
        return result.evaluation[myself]
     }).flat();
@@ -29,6 +36,7 @@ export const useAdjectiveEvaluation = (myself: string, evaluations: Evaluation[]
     return {
         recognizedByOthersAndMe,
         recognizedByMeOnly,
-        recognizedByOthersOnly
+        recognizedByOthersOnly,
+        evaluationsByParticipants
     }
 }
