@@ -17,6 +17,21 @@ export const useAdjectiveEvaluation = (myself: string, evaluations: Evaluation[]
         }
      })
 
+    const myEvaluations = evaluations.find((result) => {
+        return result.participant.id == myself
+    })?.evaluation || []
+
+    const allParticipants = evaluations.map(
+        evaluation => {
+            const id = evaluation.participant.id
+            const name = evaluation.participant.name
+            return {
+               id,
+               name
+            }
+        }
+    )
+
 	const othersAdjectives = othersEvaluation.map(result => {
        return result.evaluation[myself]
     }).flat();
@@ -37,6 +52,8 @@ export const useAdjectiveEvaluation = (myself: string, evaluations: Evaluation[]
         recognizedByOthersAndMe,
         recognizedByMeOnly,
         recognizedByOthersOnly,
-        evaluationsByParticipants
+        evaluationsByParticipants,
+        myEvaluations,
+        allParticipants,
     }
 }

@@ -15,7 +15,9 @@
 		recognizedByOthersAndMe,
 		recognizedByMeOnly,
 		recognizedByOthersOnly,
-		evaluationsByParticipants
+		evaluationsByParticipants,
+		myEvaluations,
+		allParticipants
 	} = useAdjectiveEvaluation(myself, data.evaluations);
 
 	let isFinished = data.status == 'completed' ? true : false;
@@ -35,6 +37,8 @@
 				recognizedByMeOnly = adjectives.recognizedByMeOnly;
 				recognizedByOthersOnly = adjectives.recognizedByOthersOnly;
 				evaluationsByParticipants = adjectives.evaluationsByParticipants;
+				myEvaluations = adjectives.myEvaluations;
+				allParticipants = adjectives.allParticipants;
 
 				if (status == 'completed') {
 					clearInterval(update);
@@ -75,12 +79,34 @@
 			</div>
 		</dl>
 		{#if isFinished}
+		<div class="relative mt-14 rounded-md shadow-sm">
+			<div class="text-xl font-bold tracking-tight text-gray-900">Adjectives you gave to</div>
+			<div class="mt-6 border-t border-gray-100">
+				<dl class="divide-y divide-gray-100">
+					{#each allParticipants as participant}
+							<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+								<dt class="text-sm font-medium leading-6 text-gray-900">
+									{#if participant.id == myself}
+										Yourself
+									{:else}
+										{participant.name}
+									{/if}
+									
+								</dt>
+								<dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+									{myEvaluations[participant.id]}
+									<!-- {evaluationByParticipant.myAdjectives.join(',')} -->
+								</dd>
+							</div>
+					{/each}
+				</dl>
+			</div>
+		</div>
 			<div class="relative mt-14 rounded-md shadow-sm">
-				<div class="text-xl font-bold tracking-tight text-gray-900">Adjectives by Participants</div>
+				<div class="text-xl font-bold tracking-tight text-gray-900">Adjectives given to you by</div>
 				<div class="mt-6 border-t border-gray-100">
 					<dl class="divide-y divide-gray-100">
 						{#each evaluationsByParticipants as evaluationByParticipant}
-							<div />
 							<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
 								<dt class="text-sm font-medium leading-6 text-gray-900">
 									{evaluationByParticipant.name}
